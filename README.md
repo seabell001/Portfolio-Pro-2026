@@ -76,7 +76,7 @@ Portfolio-Pro/
 
 ```bash
 # 1. 克隆项目
-git clone https://github.com/yourusername/Portfolio-Pro.git
+git clone https://github.com/seabell001/Portfolio-Pro-2026.git
 cd Portfolio-Pro
 
 # 2. 安装依赖
@@ -121,7 +121,7 @@ node --version  # 验证安装成功
 
 ```bash
 # 克隆项目
-git clone https://github.com/yourusername/Portfolio-Pro.git
+git clone https://github.com/seabell001/Portfolio-Pro-2026.git
 cd Portfolio-Pro
 
 # 安装依赖
@@ -188,7 +188,7 @@ sudo apt-get install -y nodejs
 # 访问 https://nodejs.org/ 下载安装包，安装完成后重启
 
 # 2. 克隆或下载项目
-git clone https://github.com/yourusername/Portfolio-Pro.git
+git clone https://github.com/seabell001/Portfolio-Pro-2026.git
 cd Portfolio-Pro
 
 # 3. 安装依赖
@@ -357,8 +357,8 @@ cp database/portfolio.db /backup/portfolio_$(date +%Y%m%d).db
 
 ## 📧 联系作者
 
-- GitHub: [@yourusername](https://github.com/yourusername)
-- Email: your@email.com
+- GitHub: [@yourusername](https://github.com/seabell001)
+- Email:lucifer991@qq.com
 
 ---
 
