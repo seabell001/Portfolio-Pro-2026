@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>管理后台 - Portfolio-Pro</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dark.css" id="dark-style" disabled>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #f1f5f9;
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        /* 侧边栏 */
+        .sidebar {
+            width: 260px;
+            background: white;
+            border-right: 1px solid rgba(0, 0, 0, 0.08);
+            padding: 2rem 1.5rem;
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            overflow-y: auto;
+            z-index: 100;
+            transition: transform 0.3s ease;
+        }
+        
+        .sidebar-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 3rem;
+            display: block;
+            text-decoration: none;
+        }
+        
+        .sidebar-nav {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        
+        .nav-item {
+            padding: 0.875rem 1.25rem;
+            border-radius: 12px;
+            color: #475569;
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .nav-item:hover {
+            background: rgba(99, 102, 241, 0.08);
+            color: #6366f1;
+        }
+        
+        .nav-item.active {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            color: white;
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+        }
+        
+        .nav-icon {
+            font-size: 1.25rem;
+        }
+        
+        /* 主内容区 */
+        .main-content {
+            flex: 1;
+            margin-left: 260px;
+            padding: 2rem;
+            transition: margin-left 0.3s ease;
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 3rem;
+        }
+        
+        .header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #0f172a;
+        }
+        
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .btn-logout {
+            padding: 0.625rem 1.5rem;
+            background: #f1f5f9;
+            border: none;
+            border-radius: 10px;
+            color: #475569;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .btn-logout:hover {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+        
+        /* 统计卡片 */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+        
+        .stat-card {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
+        }
+        
+        .stat-label {
+            color: #94a3b8;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #6366f1, #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        /* 内容区 */
+        .content-section {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            margin-bottom: 2rem;
+            display: none;
+        }
+        
+        .content-section.active {
+            display: block;
+            animation: fadeIn 0.4s ease;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #0f172a;
+        }
+        
+        .btn-primary {
+            padding: 0.75rem 1.5rem;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4);
+        }
+        
+        /* 表单 */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-label {
+            display: block;
+            color: #475569;
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.2s ease;
+            font-family: inherit;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: #6366f1;
+            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+        }
+        
+        .form-textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        /* 列表 */
+        .item-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .list-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.25rem;
+            background: #f8fafc;
+            border-radius: 12px;
+            transition: all 0.2s ease;
+        }
+        
+        .list-item:hover {
+            background: #f1f5f9;
+        }
+        
+        .item-info {
+            flex: 1;
+        }
+        
+        .item-title {
+            font-weight: 600;
+            color: #0f172a;
+            margin-bottom: 0.25rem;
+        }
+        
+        .item-desc {
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+        
+        .item-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .btn-action {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .btn-edit {
+            background: rgba(99, 102, 241, 0.1);
+            color: #6366f1;
+        }
+        
+        .btn-edit:hover {
+            background: #6366f1;
+            color: white;
+        }
+        
+        .btn-delete {
+            background: rgba(239, 68, 68, 0.1);
+            color: #ef4444;
+        }
+        
+        .btn-delete:hover {
+            background: #ef4444;
+            color: white;
+        }
+        
+        /* 响应式 */
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            
+            .main-content {
+                margin-left: 0;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* 暗黑模式 */
+        [data-theme="dark"] body {
+            background: #0a0a0f;
+        }
+        
+        [data-theme="dark"] .sidebar {
+            background: #1a1a2e;
+            border-color: rgba(255, 255, 255, 0.08);
+        }
+        
+        [data-theme="dark"] .main-content {
+            background: #0a0a0f;
+        }
+        
+        [data-theme="dark"] .stat-card,
+        [data-theme="dark"] .content-section {
+            background: #1a1a2e;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+        }
+        
+        [data-theme="dark"] .header h1 {
+            color: #e2e8f0;
+        }
+        
+        [data-theme="dark"] .section-title {
+            color: #e2e8f0;
+        }
+        
+        [data-theme="dark"] .form-input {
+            background: #0a0a0f;
+            border-color: rgba(255, 255, 255, 0.1);
+            color: #e2e8f0;
+        }
+        
+        [data-theme="dark"] .list-item {
+            background: rgba(255, 255, 255, 0.05);
+        }
+        
+        [data-theme="dark"] .list-item:hover {
+            background: rgba(255, 255, 255, 0.08);
+        }
+        
+        [data-theme="dark"] .item-title {
+            color: #e2e8f0;
+        }
+    </style>
+</head>
+<body>
+    <!-- 侧边栏 -->
+    <aside class="sidebar">
+        <a href="#" class="sidebar-logo">Portfo<span>lio</span> 后台</a>
+        <nav class="sidebar-nav">
+            <a href="#" class="nav-item active" data-section="overview">
+                <span class="nav-icon">📊</span>
+                <span>概览</span>
+            </a>
+            <a href="#" class="nav-item" data-section="profile">
+                <span class="nav-icon">👤</span>
+                <span>个人资料</span>
+            </a>
+            <a href="#" class="nav-item" data-section="skills">
+                <span class="nav-icon">⚡</span>
+                <span>技能管理</span>
+            </a>
+            <a href="#" class="nav-item" data-section="projects">
+                <span class="nav-icon">🎨</span>
+                <span>作品管理</span>
+            </a>
+            <a href="#" class="nav-item" data-section="social">
+                <span class="nav-icon">🔗</span>
+                <span>社交链接</span>
+            </a>
+            <a href="#" class="nav-item" data-section="settings">
+                <span class="nav-icon">⚙️</span>
+                <span>系统设置</span>
+            </a>
+        </nav>
+    </aside>
+    
+    <!-- 主内容区 -->
+    <main class="main-content">
+        <div class="header">
+            <h1 id="page-title">概览</h1>
+            <div class="user-menu">
+                <button class="btn-logout" id="logout-btn">退出登录</button>
+            </div>
+        </div>
+        
+        <!-- 概览 -->
+        <section class="content-section active" id="overview">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-label">访客总数</div>
+                    <div class="stat-value" id="stat-visitors">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">技能标签</div>
+                    <div class="stat-value" id="stat-skills">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">作品数量</div>
+                    <div class="stat-value" id="stat-projects">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">社交链接</div>
+                    <div class="stat-value" id="stat-social">0</div>
+                </div>
+            </div>
+            
+            <div class="content-section">
+                <div class="section-header">
+                    <h2 class="section-title">最近访客</h2>
+                </div>
+                <div class="item-list" id="recent-visitors">
+                    <!-- 动态加载 -->
+                </div>
+            </div>
+        </section>
+        
+        <!-- 个人资料 -->
+        <section class="content-section" id="profile">
+            <div class="section-header">
+                <h2 class="section-title">个人资料编辑</h2>
+            </div>
+            <form id="profile-form">
+                <div class="form-group">
+                    <label class="form-label">头像</label>
+                    <input type="file" id="avatar-upload" accept="image/*" class="form-input">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">姓名</label>
+                    <input type="text" id="profile-name" class="form-input" placeholder="请输入姓名">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">职位</label>
+                    <input type="text" id="profile-title" class="form-input" placeholder="请输入职位">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">简介</label>
+                    <textarea id="profile-bio" class="form-input form-textarea" placeholder="请输入个人简介"></textarea>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">所在地</label>
+                    <input type="text" id="profile-location" class="form-input" placeholder="请输入所在地">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">邮箱</label>
+                    <input type="email" id="profile-email" class="form-input" placeholder="请输入邮箱">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">微信</label>
+                    <input type="text" id="profile-wechat" class="form-input" placeholder="请输入微信号">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">地址</label>
+                    <input type="text" id="profile-address" class="form-input" placeholder="请输入地址">
+                </div>
+                <button type="submit" class="btn-primary">保存修改</button>
+            </form>
+        </section>
+        
+        <!-- 技能管理 -->
+        <section class="content-section" id="skills">
+            <div class="section-header">
+                <h2 class="section-title">技能标签管理</h2>
+                <button class="btn-primary" id="add-skill-btn">添加技能</button>
+            </div>
+            <div class="item-list" id="skills-list">
+                <!-- 动态加载 -->
+            </div>
+        </section>
+        
+        <!-- 作品管理 -->
+        <section class="content-section" id="projects">
+            <div class="section-header">
+                <h2 class="section-title">作品管理</h2>
+                <button class="btn-primary" id="add-project-btn">添加作品</button>
+            </div>
+            <div class="item-list" id="projects-list">
+                <!-- 动态加载 -->
+            </div>
+        </section>
+        
+        <!-- 社交链接 -->
+        <section class="content-section" id="social">
+            <div class="section-header">
+                <h2 class="section-title">社交链接管理</h2>
+                <button class="btn-primary" id="add-social-btn">添加链接</button>
+            </div>
+            <div class="item-list" id="social-list">
+                <!-- 动态加载 -->
+            </div>
+        </section>
+        
+        <!-- 系统设置 -->
+        <section class="content-section" id="settings">
+            <div class="section-header">
+                <h2 class="section-title">系统设置</h2>
+            </div>
+            <form id="settings-form">
+                <div class="form-group">
+                    <label class="form-label">旧密码</label>
+                    <input type="password" id="old-password" class="form-input" placeholder="请输入旧密码">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">新密码</label>
+                    <input type="password" id="new-password" class="form-input" placeholder="请输入新密码">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">确认新密码</label>
+                    <input type="password" id="confirm-password" class="form-input" placeholder="请再次输入新密码">
+                </div>
+                <button type="submit" class="btn-primary">修改密码</button>
+            </form>
+            
+            <div style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid rgba(0, 0, 0, 0.08);">
+                <button class="btn-action btn-delete" id="clear-cache-btn" style="padding: 0.75rem 1.5rem;">清理缓存</button>
+            </div>
+        </section>
+    </main>
+    
+    <script>
+        // 检查登录状态
+        if (!localStorage.getItem('adminToken')) {
+            window.location.href = '/backend/admin.html';
+        }
+        
+        // 导航切换
+        const navItems = document.querySelectorAll('.nav-item');
+        const sections = document.querySelectorAll('.content-section');
+        const pageTitle = document.getElementById('page-title');
+        
+        navItems.forEach(item => {
+            item.addEventListener('click', (e) => {
+                e.preventDefault();
+                
+                const targetSection = item.dataset.section;
+                
+                // 更新导航状态
+                navItems.forEach(nav => nav.classList.remove('active'));
+                item.classList.add('active');
+                
+                // 更新内容区
+                sections.forEach(section => section.classList.remove('active'));
+                document.getElementById(targetSection).classList.add('active');
+                
+                // 更新页面标题
+                pageTitle.textContent = item.querySelector('span:last-child').textContent;
+            });
+        });
+        
+        // 退出登录
+        document.getElementById('logout-btn').addEventListener('click', () => {
+            localStorage.removeItem('adminToken');
+            localStorage.removeItem('adminUser');
+            window.location.href = '/backend/admin.html';
+        });
+        
+        // 加载统计数据
+        async function loadStats() {
+            try {
+                const response = await fetch('/api/admin/stats', {
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('adminToken')}`
+                    }
+                });
+                const data = await response.json();
+                
+                document.getElementById('stat-visitors').textContent = data.visitors || 0;
+                document.getElementById('stat-skills').textContent = data.skills || 0;
+                document.getElementById('stat-projects').textContent = data.projects || 0;
+                document.getElementById('stat-social').textContent = data.social || 0;
+            } catch (error) {
+                console.error('加载统计数据失败:', error);
+            }
+        }
+        
+        // 页面加载时初始化
+        loadStats();
+    </script>
+</body>
+</html>

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Portfolio - 个人作品集</title>
+    <meta name="description" content="个人作品集展示，专业开发者/设计师主页">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/dark.css" id="dark-style" disabled>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">Portfo<span class="accent">lio</span></a>
+            <div class="nav-links">
+                <a href="#about">关于</a>
+                <a href="#skills">技能</a>
+                <a href="#projects">作品</a>
+                <a href="#contact">联系</a>
+                <button id="theme-toggle" class="theme-btn" aria-label="切换主题">
+                    <span class="icon-sun">☀️</span>
+                    <span class="icon-moon">🌙</span>
+                </button>
+            </div>
+            <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="菜单">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- 移动端菜单 -->
+    <div class="mobile-menu" id="mobile-menu">
+        <a href="#about">关于</a>
+        <a href="#skills">技能</a>
+        <a href="#projects">作品</a>
+        <a href="#contact">联系</a>
+    </div>
+
+    <!-- Hero区域 -->
+    <section class="hero" id="hero">
+        <div class="hero-container">
+            <div class="hero-avatar" data-animate="fade-up">
+                <div class="avatar-wrapper">
+                    <img src="assets/avatars/default.jpg" alt="头像" id="avatar-img">
+                    <div class="avatar-ring"></div>
+                </div>
+            </div>
+            <div class="hero-content" data-animate="fade-up" data-delay="100">
+                <p class="hero-greeting">你好，我是</p>
+                <h1 class="hero-name" id="hero-name">张三</h1>
+                <p class="hero-tagline" id="hero-tagline">全栈开发者 & UI设计师</p>
+                <p class="hero-bio" id="hero-bio">热爱创造优美的数字体验，专注于现代Web技术与用户体验设计</p>
+                <div class="hero-actions">
+                    <a href="#projects" class="btn btn-primary">查看作品</a>
+                    <a href="#contact" class="btn btn-secondary">联系我</a>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <div class="mouse">
+                <div class="wheel"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 关于我 -->
+    <section class="section" id="about">
+        <div class="container">
+            <h2 class="section-title" data-animate="fade-up">关于我</h2>
+            <div class="about-content" data-animate="fade-up" data-delay="100">
+                <div class="about-text">
+                    <p id="about-text">
+                        我是一名 passionate 的全栈开发者，拥有 5 年+ 的Web开发经验。
+                        擅长使用现代技术栈构建高性能、美观的应用。
+                    </p>
+                    <div class="about-info">
+                        <div class="info-item">
+                            <span class="info-label">姓名</span>
+                            <span class="info-value" id="info-name">张三</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">职业</span>
+                            <span class="info-value" id="info-title">全栈开发者</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">所在地</span>
+                            <span class="info-value" id="info-location">北京，中国</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">邮箱</span>
+                            <span class="info-value" id="info-email">example@email.com</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-stats">
+                    <div class="stat-card" data-animate="fade-up" data-delay="200">
+                        <div class="stat-number" id="stat-projects">50+</div>
+                        <div class="stat-label">完成项目</div>
+                    </div>
+                    <div class="stat-card" data-animate="fade-up" data-delay="300">
+                        <div class="stat-number" id="stat-experience">5+</div>
+                        <div class="stat-label">年经验</div>
+                    </div>
+                    <div class="stat-card" data-animate="fade-up" data-delay="400">
+                        <div class="stat-number" id="stat-clients">30+</div>
+                        <div class="stat-label">满意客户</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 技能 -->
+    <section class="section section-alt" id="skills">
+        <div class="container">
+            <h2 class="section-title" data-animate="fade-up">专业技能</h2>
+            <div class="skills-grid" id="skills-container">
+                <!-- 动态加载技能标签 -->
+            </div>
+        </div>
+    </section>
+
+    <!-- 作品集 -->
+    <section class="section" id="projects">
+        <div class="container">
+            <h2 class="section-title" data-animate="fade-up">精选作品</h2>
+            <div class="projects-grid" id="projects-container">
+                <!-- 动态加载作品 -->
+            </div>
+        </div>
+    </section>
+
+    <!-- 联系我 -->
+    <section class="section section-alt" id="contact">
+        <div class="container">
+            <h2 class="section-title" data-animate="fade-up">联系我</h2>
+            <div class="contact-content" data-animate="fade-up" data-delay="100">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <div class="contact-icon">📧</div>
+                        <div>
+                            <h3>邮箱</h3>
+                            <p id="contact-email">example@email.com</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">📱</div>
+                        <div>
+                            <h3>微信</h3>
+                            <p id="contact-wechat">your_wechat_id</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">📍</div>
+                        <div>
+                            <h3>地址</h3>
+                            <p id="contact-address">北京市朝阳区</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="social-links" id="social-links">
+                    <!-- 动态加载社交链接 -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p id="footer-text">&copy; 2026 张三. All rights reserved.</p>
+            <p class="visitor-count">访客数: <span id="visitor-count">0</span></p>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/theme.js"></script>
+</body>
+</html>
